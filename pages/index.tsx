@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { getSession, useSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import Layout from '../components/Layout'
 import Sidebar from '../components/Sidebar';
@@ -21,7 +21,7 @@ const IndexPage = ({ boards }: Props) => {
   }, [boards])
   return (
     <Layout title="Kanban Home">
-      <div className='width-full h-[90.5%] flex flex-row bg-lightBg'>
+      <div className='width-full h-[90.5%] flex flex-row bg-lightBg dark:bg-darkBg dark: relative'>
         <Sidebar />
         <div className='w-[20%] h-full' />
       </div>

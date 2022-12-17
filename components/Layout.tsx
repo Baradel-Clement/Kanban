@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import Head from 'next/head'
 import Header from './Header'
 import { closeModalUpdateBoard } from '../utils/closeModal'
@@ -14,11 +14,16 @@ type Props = {
 }
 
 const Layout = ({ children, title = 'Kanban' }: Props) => {
-  const { updateBoardModal, setUpdateBoardModal } = useHomeStateContext();
+  const { updateBoardModal, setUpdateBoardModal, darkMode, setDarkMode } = useHomeStateContext();
   const { displayAddEditBoard, displayDeleteModal } = useBoardStateContext();
 
+  useEffect(() => {
+    let darkModePreference = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    setDarkMode(darkModePreference);
+  }, [])
+
   return (
-    <div className='h-screen relative' onClick={(e) => {
+    <div className={`${darkMode ? 'dark' : ''} h-screen relative`} onClick={(e) => {
       if (updateBoardModal) {
         if (closeModalUpdateBoard('closeModalUpdateBoardOff', e)) {
           setUpdateBoardModal(false)

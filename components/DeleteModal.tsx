@@ -37,7 +37,7 @@ const DeleteModal = () => {
   return (
     <>
       <div onClick={() => setDisplayDeleteModal({ display: false, mode: '', id: '' })} className='w-screen h-screen absolute bg-black/50 z-20 top-0' />
-      <div className='w-[480px] min-h-[229px] flex flex-col justify-between p-8 rounded-md bg-white absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 z-20'>
+      <div className='w-[480px] min-h-[229px] flex flex-col justify-between p-8 rounded-md bg-white dark:bg-darkBg absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 z-20'>
         <p className='text-hL text-red font-bold'>Delete this {displayDeleteModal.mode} ?</p>
         {
           displayDeleteModal.mode === 'board' && (
@@ -46,7 +46,7 @@ const DeleteModal = () => {
         }
         <div className='w-full flex justify-between items-center'>
           <button onClick={() => deleteThis()} className='w-[200px] h-[40px] text-bL font-bold bg-red hover:bg-redHover text-white rounded-[20px]'>Delete</button>
-          <button className='w-[200px] h-[40px] text-bL font-bold bg-purple/10 hover:bg-purple/25 text-purple rounded-[20px]'>Cancel</button>
+          <button onClick={() => setDisplayDeleteModal({ display: false, mode: '', id: '' })} className='w-[200px] h-[40px] text-bL font-bold bg-purple/10 dark:bg-white hover:bg-purple/25 text-purple rounded-[20px]'>Cancel</button>
         </div>
       </div>
     </>

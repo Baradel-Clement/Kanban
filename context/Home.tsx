@@ -11,6 +11,8 @@ export const HomeContextProvider = ({ children }: HomeContextProviderProps) => {
   const [updateBoardModal, setUpdateBoardModal] = useState(false);
   const [boards, setBoards] = useState<Board[]>([]);
   const [boardSelectedId, setBoardSelectedId] = useState('');
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [darkMode, setDarkMode] = useState(true);
 
   return (
     <HomeContext.Provider
@@ -21,6 +23,10 @@ export const HomeContextProvider = ({ children }: HomeContextProviderProps) => {
         setBoards,
         boardSelectedId,
         setBoardSelectedId,
+        showSidebar,
+        setShowSidebar,
+        darkMode,
+        setDarkMode
       }}>
       {children}
     </HomeContext.Provider>
