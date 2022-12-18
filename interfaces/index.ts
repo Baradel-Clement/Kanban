@@ -29,7 +29,7 @@ export type Column = {
   boardId: string | null
 }
 
-export type Board = {
+export type IBoard = {
   id: string
   name: string
   columns: Column[]
@@ -38,12 +38,12 @@ export type Board = {
 
 export type HomeContextType = {
   updateBoardModal: boolean;
-  boards: Board[];
+  boards: IBoard[];
   boardSelectedId: string;
   showSidebar: boolean;
   darkMode: boolean;
   setUpdateBoardModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setBoards: React.Dispatch<React.SetStateAction<Board[]>>;
+  setBoards: React.Dispatch<React.SetStateAction<IBoard[]>>;
   setBoardSelectedId: React.Dispatch<React.SetStateAction<string>>;
   setShowSidebar: React.Dispatch<React.SetStateAction<boolean>>
   setDarkMode: React.Dispatch<React.SetStateAction<boolean>>

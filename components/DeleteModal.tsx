@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHomeStateContext } from '../context/Home';
 import { useBoardStateContext } from '../context/Board';
-import { Board } from '../interfaces';
+import { IBoard } from '../interfaces';
 import toast from 'react-hot-toast';
 
 const DeleteModal = () => {
@@ -20,7 +20,7 @@ const DeleteModal = () => {
       const deletedBoard = await res.json();
       console.log("Deleting board successful", { deletedBoard });
 
-      const newBoards: Board[] = [];
+      const newBoards: IBoard[] = [];
       boards.forEach((board) => {
         if (board.id !== deletedBoard.id) {
           newBoards.push(board)

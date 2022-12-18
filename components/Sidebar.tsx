@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHomeStateContext } from '../context/Home';
 import { useBoardStateContext } from '../context/Board';
-import { Board } from '../interfaces'
+import { IBoard } from '../interfaces'
 import Image from 'next/image';
 import darkIcon from '../public/assets/icon-dark-theme.svg';
 import lightIcon from '../public/assets/icon-light-theme.svg';

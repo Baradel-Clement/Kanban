@@ -3,12 +3,13 @@ import { getSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import Layout from '../components/Layout'
 import Sidebar from '../components/Sidebar';
+import Board from '../components/Board';
 import { useHomeStateContext } from '../context/Home';
-import { Board } from '../interfaces';
+import { IBoard } from '../interfaces';
 import { getBoards } from './api/board';
 
 type Props = {
-  boards: Board[]
+  boards: IBoard[]
 }
 
 const IndexPage = ({ boards }: Props) => {
@@ -23,7 +24,7 @@ const IndexPage = ({ boards }: Props) => {
     <Layout title="Kanban Home">
       <div className='width-full h-[90.5%] flex flex-row bg-lightBg dark:bg-darkBg dark: relative'>
         <Sidebar />
-        <div className='w-[20%] h-full' />
+        <Board />
       </div>
 
     </Layout>
