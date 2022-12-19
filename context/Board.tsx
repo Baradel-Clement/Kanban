@@ -30,27 +30,30 @@ export const BoardContextProvider = ({ children }: BoardContextProviderProps) =>
       setAddBoardInputs({ ...addBoardInputs, columns: newColumns });
     }
     else if (mode === 'add') {
-      let newId = '';
-      const newColumns = addBoardInputs.columns.map((column) => {
-        newId = 'azdzd';
-        return {
-          ...column
-        }
+      let newId = '0';
+      const newColumns = [];
+      addBoardInputs.columns.forEach((column) => {
+        newId = parseInt(newId) <= parseInt(column.id) ? `${parseInt(column.id) + 1}` : newId;
+        newColumns.push({ ...column })
       });
 
       newColumns.push({ name: '', id: newId })
+      console.log(newColumns)
       setAddBoardInputs({ ...addBoardInputs, columns: newColumns });
     }
     else {
-      const newColumns = addBoardInputs.columns.map((column) => {
+      const newColumns: { id: string, name: string }[] = [];
+      addBoardInputs.columns.forEach((column) => {
         if (column.id === columnId) {
-          return {
+          newColumns.push({
             name: columnName,
             id: column.id
-          }
+          })
         }
-        return {
-          ...column
+        else {
+          newColumns.push({
+            ...column
+          })
         }
       })
       setAddBoardInputs({ ...addBoardInputs, columns: newColumns });
@@ -59,16 +62,15 @@ export const BoardContextProvider = ({ children }: BoardContextProviderProps) =>
 
   const onChangeEditBoards = (columnId: string, columnName: string, mode: string) => {
     if (mode === 'changeName') {
-      const newColumns = editBoardInputs.columns.map((column) => {
+      const newColumns: { id: string, name: string }[] = [];
+      editBoardInputs.columns.forEach((column) => {
         if (column.id === columnId) {
-          return {
+          newColumns.push({
             name: columnName,
             id: column.id
-          }
+          })
         }
-        return {
-          ...column
-        }
+        else newColumns.push({ ...column })
       })
       setEditBoardInputs({ ...editBoardInputs, columns: newColumns });
     }

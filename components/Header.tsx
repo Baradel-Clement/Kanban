@@ -1,6 +1,4 @@
 import React from 'react'
-import logo from '../public/assets/logo-light.svg';
-import darkLogo from '../public/assets/logo-dark.svg';
 import ellipsis from '../public/assets/icon-vertical-ellipsis.svg';
 import Image from 'next/image';
 import { useHomeStateContext } from '../context/Home';
@@ -20,7 +18,11 @@ const Header = () => {
       <div className='w-[80%] h-full flex justify-between items-center py-5 px-8 border-b border-b-linesLight dark:border-linesDark'>
         <h2 className='text-hXL text-black dark:text-white'>{completeBoardSelected?.name}</h2>
         <div className='w-[193px] flex justify-between items-center flex-row relative'>
-          <button className='h-12 w-[164px] flex justify-center items-center rounded-[24px] font-bold bg-purple hover:bg-purpleHover text-white'>+ Add New Task</button>
+          <button onClick={() => {
+            if (completeBoardSelected?.columns.length !== 0) {
+              console.log('new task')
+            }
+          }} className={`h-12 w-[164px] flex justify-center items-center rounded-[24px] font-bold ${completeBoardSelected?.columns.length === 0 ? 'cursor-not-allowed bg-purple/30' : 'bg-purple hover:bg-purpleHover'} text-white`}>+ Add New Task</button>
           <Image src={ellipsis} alt="ellipsis" className='h-[20px] cursor-pointer closeModalUpdateBoardOff' onClick={() => setUpdateBoardModal(!updateBoardModal)} />
           {
             updateBoardModal && (
