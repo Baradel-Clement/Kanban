@@ -10,7 +10,11 @@ export const getBoardById = async (id: string, includeUser: boolean) => {
     },
     include: {
       user: includeUser,
-      columns: true,
+      columns: {
+        include: {
+          tasks: true,
+        }
+      },
     },
   });
   return board;
@@ -22,7 +26,11 @@ export const getBoards = async (userId: string) => {
       userId,
     },
     include: {
-      columns: true,
+      columns: {
+        include: {
+          tasks: true,
+        }
+      },
     }
   });
   return boards;
@@ -37,7 +45,7 @@ export const createBoard = async (reqBody: any, session: any) => {
           name: column.name,
         })),
       },
-      user: { connect: { email: session?.user?.email } }, // Connect the new invoice to an existing User with the email provided
+      user: { connect: { email: session?.user?.email } },
     },
   });
   const board = await getBoardById(newBoard.id, false);

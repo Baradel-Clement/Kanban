@@ -22,7 +22,7 @@ export type Task = {
   subtasks?: Subtask[]
 }
 
-export type Column = {
+export type IColumn = {
   id: string
   name: string
   tasks?: Task[]
@@ -32,7 +32,7 @@ export type Column = {
 export type IBoard = {
   id: string
   name: string
-  columns: Column[]
+  columns: IColumn[]
   userId?: string
 }
 
@@ -53,14 +53,14 @@ export type BoardContextType = {
   displayAddEditBoard: { display: boolean, mode: string }
   addBoardInputs: {
     name: string;
-    columns: [] | {
+    columns: {
       id: string;
       name: string;
     }[];
   }
   editBoardInputs: {
     name: string;
-    columns: [] | {
+    columns: {
       id: string;
       name: string;
     }[];
@@ -72,14 +72,14 @@ export type BoardContextType = {
   }>>
   setAddBoardInputs: React.Dispatch<React.SetStateAction<{
     name: string;
-    columns: [] | {
+    columns: {
       id: string;
       name: string;
     }[];
   }>>
   setEditBoardInputs: React.Dispatch<React.SetStateAction<{
     name: string;
-    columns: [] | {
+    columns: {
       id: string;
       name: string;
     }[];
@@ -91,4 +91,25 @@ export type BoardContextType = {
   }>>
   onChangeAddBoards: (columnId: string, columnName: string, deleting: string) => void;
   onChangeEditBoards: (columnId: string, columnName: string, mode: string) => void;
+};
+
+export type TaskContextType = {
+  displayAddTask: boolean;
+  displayAddTaskSelectColumn: boolean;
+  addTaskInputs: { title: string, description: string, subtasks: { id: string, name: string }[], status: { value: string, columnId: string } };
+  addTaskErrors: { title: boolean, description: boolean, subtasks: string[] }
+  setDisplayAddTask: React.Dispatch<React.SetStateAction<boolean>>
+  setDisplayAddTaskSelectColumn: React.Dispatch<React.SetStateAction<boolean>>
+  setAddTaskInputs: React.Dispatch<React.SetStateAction<{
+    title: string;
+    description: string;
+    subtasks: {
+      id: string;
+      name: string;
+    }[];
+    status: { value: string, columnId: string };
+  }>>
+  setAddTaskErrors: React.Dispatch<React.SetStateAction<{ title: boolean, description: boolean, subtasks: string[] }>>
+  onChangeAddTaskInputs: (inputName: string, mode: string, subtaskId: string, inputValue: string) => void
+  checkAddTaskFormErrors: () => boolean
 };

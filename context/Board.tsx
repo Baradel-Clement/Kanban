@@ -9,11 +9,11 @@ export const BoardContext = createContext({} as BoardContextType)
 
 export const BoardContextProvider = ({ children }: BoardContextProviderProps) => {
   const [displayAddEditBoard, setDisplayAddEditBoard] = useState({ display: false, mode: '' });
-  const [addBoardInputs, setAddBoardInputs] = useState<{ name: string, columns: [] | { id: string, name: string }[] }>({
+  const [addBoardInputs, setAddBoardInputs] = useState<{ name: string, columns: { id: string, name: string }[] }>({
     name: '',
     columns: [{ name: 'Todo', id: '1' }, { name: 'Doing', id: '2' }, { name: 'Done', id: '3' }]
   })
-  const [editBoardInputs, setEditBoardInputs] = useState<{ name: string, columns: [] | { id: string, name: string }[] }>({
+  const [editBoardInputs, setEditBoardInputs] = useState<{ name: string, columns: { id: string, name: string }[] }>({
     name: '',
     columns: []
   });

@@ -21,7 +21,14 @@ const Board = () => {
         completeBoardSelected?.columns.length !== 0 && (
           <div>
             {
-              completeBoardSelected?.columns.map((col) => <p key={col.id} className='text-white'>{col.name}</p>)
+              completeBoardSelected?.columns.map((col) => (
+                <>
+                  <p key={col.id} className='text-white'>{col.name}</p>
+                  {
+                    col.tasks?.map((task) => <p className='font-bold text-white'>{task.title}</p>)
+                  }
+                </>
+              ))
             }
           </div>
         )

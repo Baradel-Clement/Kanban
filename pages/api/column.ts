@@ -30,6 +30,9 @@ export const editColumn = async (reqBody: { id: string, name: string }) => {
     },
     data: {
       name: reqBody.name,
+    },
+    include: {
+      tasks: true,
     }
   });
   return updateColumn;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHomeStateContext } from '../context/Home';
 import { useBoardStateContext } from '../context/Board';
 import toast from 'react-hot-toast';
-import { Column } from '../interfaces';
+import { IColumn } from '../interfaces';
 
 const AddEditBoard = () => {
   const { boards, setBoards, boardSelectedId, setBoardSelectedId } = useHomeStateContext();
@@ -92,7 +92,7 @@ const AddEditBoard = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body)
     });
-    const newColumn: Column = await res.json();
+    const newColumn: IColumn = await res.json();
     console.log("addColumnViaBoard succesful", { newColumn });
     onChangeEditBoards(newColumn.id, '', 'add');
 
@@ -117,6 +117,7 @@ const AddEditBoard = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body)
     });
+    console.log(res)
     if (res.status === 500) {
       setErrorColumnTasks(true);
     }

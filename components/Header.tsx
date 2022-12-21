@@ -3,11 +3,13 @@ import ellipsis from '../public/assets/icon-vertical-ellipsis.svg';
 import Image from 'next/image';
 import { useHomeStateContext } from '../context/Home';
 import { useBoardStateContext } from '../context/Board';
+import { useTaskStateContext } from '../context/Task';
 import { signOut } from 'next-auth/react';
 
 const Header = () => {
   const { updateBoardModal, setUpdateBoardModal, boardSelectedId, showSidebar, boards } = useHomeStateContext();
   const { setDisplayAddEditBoard, setDisplayDeleteModal } = useBoardStateContext();
+  const { setDisplayAddTask } = useTaskStateContext();
   let completeBoardSelected = boards.find((board) => board.id === boardSelectedId);
 
   return (
@@ -19,9 +21,7 @@ const Header = () => {
         <h2 className='text-hXL text-black dark:text-white'>{completeBoardSelected?.name}</h2>
         <div className='w-[193px] flex justify-between items-center flex-row relative'>
           <button onClick={() => {
-            if (completeBoardSelected?.columns.length !== 0) {
-              console.log('new task')
-            }
+            setDisplayAddTask(true)
           }} className={`h-12 w-[164px] flex justify-center items-center rounded-[24px] font-bold ${completeBoardSelected?.columns.length === 0 ? 'cursor-not-allowed bg-purple/30' : 'bg-purple hover:bg-purpleHover'} text-white`}>+ Add New Task</button>
           <Image src={ellipsis} alt="ellipsis" className='h-[20px] cursor-pointer closeModalUpdateBoardOff' onClick={() => setUpdateBoardModal(!updateBoardModal)} />
           {
