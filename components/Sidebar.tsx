@@ -13,7 +13,7 @@ const Sidebar = () => {
     <>
       {
         showSidebar && (
-          <div className='w-[20%] h-full flex flex-col justify-between bg-white dark:bg-darkGrey border-r border-r-linesLight dark:border-r-linesDark pt-4 pr-6 pb-8'>
+          <div className='min-w-[20%] h-full flex flex-col justify-between bg-white dark:bg-darkGrey border-r border-r-linesLight dark:border-r-linesDark pt-4 pr-6 pb-8'>
             <div>
               <p className='text-hS text-mediumGrey tracking-S font-bold ml-8 mb-5'>ALL BOARDS ({boards.length})</p>
               <div>

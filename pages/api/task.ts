@@ -27,12 +27,31 @@ export const addTask = async (reqBody: any) => {
   return task;
 }
 
+export const editTask = async (reqBody: any) => {
+  const newTask = await prisma.task.update({
+    where: {
+      id: reqBody.id,
+    },
+    data: {
+      title: reqBody.title,
+      description: reqBody.description,
+      status: reqBody.status,
+      subtasks: reqBody.subtasks,
+    }
+  });
+  const task = await getTaskById(newTask.id, false);
+  return task;
+}
+
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   try {
     switch (req.method) {
       case 'POST':
         const newTask = await addTask(req.body);
         return res.json(newTask);
+      case 'PUT':
+        const newTaskEdited = await editTask(req.body);
+        return res.json(newTaskEdited);
       default:
         break;
     }

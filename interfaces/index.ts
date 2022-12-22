@@ -99,6 +99,9 @@ export type TaskContextType = {
   displayAddTaskSelectColumn: boolean;
   addTaskInputs: { title: string, description: string, subtasks: { id: string, name: string }[], status: { value: string, columnId: string } };
   addTaskErrors: { title: boolean, description: boolean, subtasks: string[] }
+  viewTask: { display: boolean, task: Task | null }
+  displayViewTaskChangeColumn: boolean
+  displayModalEditDeleteTask: boolean
   setDisplayAddTask: React.Dispatch<React.SetStateAction<boolean>>
   setDisplayAddTaskSelectColumn: React.Dispatch<React.SetStateAction<boolean>>
   setAddTaskInputs: React.Dispatch<React.SetStateAction<{
@@ -111,6 +114,12 @@ export type TaskContextType = {
     status: { value: string, columnId: string };
   }>>
   setAddTaskErrors: React.Dispatch<React.SetStateAction<{ title: boolean, description: boolean, subtasks: string[] }>>
+  setViewTask: React.Dispatch<React.SetStateAction<{
+    display: boolean;
+    task: Task | null;
+  }>>
+  setDisplayViewTaskChangeColumn: React.Dispatch<React.SetStateAction<boolean>>
+  setDisplayModalEditDeleteTask: React.Dispatch<React.SetStateAction<boolean>>
   onChangeAddTaskInputs: (inputName: string, mode: string, subtaskId: string, inputValue: string) => void
   checkAddTaskFormErrors: () => boolean
 };

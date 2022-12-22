@@ -1,12 +1,14 @@
 import React from 'react'
 import { useBoardStateContext } from '../context/Board';
 import { useHomeStateContext } from '../context/Home';
+import { useTaskStateContext } from '../context/Task';
 
 const Board = () => {
   const { boardSelectedId, boards } = useHomeStateContext();
   const { setDisplayAddEditBoard } = useBoardStateContext();
+  const { setViewTask } = useTaskStateContext();
   let completeBoardSelected = boards.find((board) => board.id === boardSelectedId);
-  console.log(boards)
+
   return (
     <>
       {
@@ -22,7 +24,7 @@ const Board = () => {
           <div className=' h-full flex p-6 overflow-x-scroll scrollbar'>
             {
               completeBoardSelected?.columns.map((col, index) => (
-                <div key={col.id} className='min-w-[280px] flex flex-col mr-6'>
+                <div key={col.id} className='min-w-[280px] w-[280px] flex flex-col mr-6'>
                   <div className='h-[15px] flex items-center mb-6'>
                     <span className={`w-[15px] h-[15px] ${index % 2 === 0 ? 'bg-[#49C4E5]' : 'bg-purple'} rounded-full mr-3`} />
                     <p className='font-bold text-mediumGrey tracking-S text-bL'>{col.name} ({col.tasks?.length})</p>
@@ -30,9 +32,10 @@ const Board = () => {
                   <div className='w-full flex flex-col'>
                     {
                       col.tasks?.map((task) => {
-                        const completedSubtasks = 0;
+                        let completedSubtasks = 0;
+                        task.subtasks?.forEach(sub => sub.isCompleted ? completedSubtasks += 1: null)
                         return (
-                          <div key={task.id} className='w-full flex flex-col bg-white dark:bg-darkGrey group px-4 py-6 cursor-pointer mb-5 last:mb-0 rounded-lg'>
+                          <div onClick={() => setViewTask({ display: true, task: task, })} key={task.id} className='w-full flex flex-col bg-white dark:bg-darkGrey group px-4 py-6 cursor-pointer mb-5 last:mb-0 rounded-lg'>
                             <p className='text-hM font-bold dark:text-white group-hover:text-purple mb-2'>{task.title}</p>
                             <p className='text-hS font-bold text-mediumGrey'>{completedSubtasks} of {task.subtasks?.length} subtasks</p>
                           </div>

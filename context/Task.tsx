@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { TaskContextType } from '../interfaces';
+import { Task, TaskContextType } from '../interfaces';
 
 type TaskContextProviderProps = {
   children: React.ReactNode;
@@ -21,7 +21,11 @@ export const TaskContextProvider = ({ children }: TaskContextProviderProps) => {
     title: false,
     description: false,
     subtasks: ['']
-  })
+  });
+
+  const [viewTask, setViewTask] = useState<{display: boolean, task: Task | null}>({ display: false, task: null })
+  const [displayViewTaskChangeColumn, setDisplayViewTaskChangeColumn] = useState(false);
+  const [displayModalEditDeleteTask, setDisplayModalEditDeleteTask] = useState(false);
 
   const onChangeAddTaskInputs = (inputName: string, mode: string, inputId: string, inputValue: string) => {
     if (inputName === 'subtasks') {
@@ -104,7 +108,13 @@ export const TaskContextProvider = ({ children }: TaskContextProviderProps) => {
         onChangeAddTaskInputs,
         checkAddTaskFormErrors,
         addTaskErrors,
-        setAddTaskErrors
+        setAddTaskErrors,
+        viewTask,
+        setViewTask,
+        displayViewTaskChangeColumn,
+        setDisplayViewTaskChangeColumn,
+        displayModalEditDeleteTask,
+        setDisplayModalEditDeleteTask
       }}>
       {children}
     </TaskContext.Provider>
