@@ -1,4 +1,5 @@
 import React from 'react'
+import { useBoardStateContext } from '../context/Board';
 import { useHomeStateContext } from '../context/Home';
 import { useTaskStateContext } from '../context/Task';
 import { IColumn, Task } from '../interfaces';
@@ -6,6 +7,7 @@ import { IColumn, Task } from '../interfaces';
 const ViewTask = () => {
   const { viewTask, setViewTask, displayViewTaskChangeColumn, setDisplayViewTaskChangeColumn, displayModalEditDeleteTask, setDisplayModalEditDeleteTask } = useTaskStateContext();
   const { boards, setBoards, boardSelectedId } = useHomeStateContext();
+  const { setDisplayDeleteModal } = useBoardStateContext();
   let completeBoardSelected = boards.find((board) => board.id === boardSelectedId);
 
   const getCompletedSubCount = (task: Task | null) => {
@@ -61,7 +63,51 @@ const ViewTask = () => {
       else return { ...board }
     });
     setBoards(newBoards);
-    setViewTask({ ...viewTask, task: newTask[0]});
+    setViewTask({ ...viewTask, task: newTask[0] });
+  }
+
+  const editColumnTask = async (newColumnTask: IColumn) => {
+    let task = {
+      ...viewTask.task,
+      status: newColumnTask.name,
+      columnId: newColumnTask.id,
+    }
+
+    let res = await fetch("api/task", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...task, column: { id: newColumnTask.id, task } })
+    })
+    const newTask = await res.json();
+    console.log("Editing Column Task Successful", { newTask });
+
+    const newBoards = boards.map((board) => {
+      if (board.id === boardSelectedId) {
+        let newTasks: Task[] = [];
+        const newColumns: IColumn[] = [];
+        board.columns.forEach((col) => {
+          newTasks = [];
+          if (col.id === newTask[0].columnId) {
+            col.tasks?.forEach((task) => newTasks.push(task));
+            newTasks.push(newTask[0]);
+            newColumns.push({ ...col, tasks: newTasks })
+          }
+          else if (col.id === viewTask.task?.columnId) {
+            col.tasks?.forEach((task) => {
+              if (task.id !== newTask[0].id) {
+                newTasks.push(task)
+              }
+            })
+            newColumns.push({ ...col, tasks: newTasks })
+          }
+          else newColumns.push({ ...col })
+        })
+        return { ...board, columns: newColumns }
+      }
+      else return { ...board }
+    });
+    setBoards(newBoards);
+    setViewTask({ ...viewTask, task: newTask[0] });
   }
 
   return (
@@ -75,7 +121,12 @@ const ViewTask = () => {
             displayModalEditDeleteTask && (
               <div className='w-[192px] h-[94px] flex flex-col justify-between bg-lightBg dark:bg-darkBg p-4 rounded-lg absolute z-30 top-[60px] -right-[96px] closeModalEditDeleteTaskOff'>
                 <p className=' text-bL text-mediumGrey hover:underline cursor-pointer'>Edit Task</p>
-                <p className=' text-bL text-red hover:underline cursor-pointer'>Delete Task</p>
+                <p onClick={() => {
+                  if (viewTask.task?.id) {
+                    setDisplayDeleteModal({ display: true, mode: 'task', id: viewTask.task.id });
+                    setViewTask({ display: false, task: null });
+                  }
+                }} className=' text-bL text-red hover:underline cursor-pointer'>Delete Task</p>
               </div>
             )
           }
@@ -109,7 +160,9 @@ const ViewTask = () => {
                 {
                   completeBoardSelected?.columns.map((col) => (
                     <div key={col.id} onClick={() => {
-                      /* setAddTaskInputs({ ...addTaskInputs, status: { value: col.name, columnId: col.id } }); */
+                      if (col.id !== viewTask.task?.columnId) {
+                        editColumnTask(col);
+                      }
                       setDisplayViewTaskChangeColumn(false);
                     }} className='w-full h-[50px] flex items-center group hover:bg-purple cursor-pointer hover:first:rounded-t-lg hover:last:rounded-b-lg px-4'>
                       <p className='text-bL text-mediumGrey group-hover:text-white'>{col.name}</p>

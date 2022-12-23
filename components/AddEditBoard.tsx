@@ -122,6 +122,7 @@ const AddEditBoard = () => {
       setErrorColumnTasks(true);
     }
     else {
+      setErrorColumnTasks(false);
       onChangeEditBoards(columnId, '', 'delete');
 
       const newBoards = boards.map((board) => {

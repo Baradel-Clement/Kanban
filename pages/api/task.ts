@@ -37,10 +37,20 @@ export const editTask = async (reqBody: any) => {
       description: reqBody.description,
       status: reqBody.status,
       subtasks: reqBody.subtasks,
+      column: { connect: { id: reqBody.columnId } },
     }
   });
   const task = await getTaskById(newTask.id, false);
   return task;
+}
+
+export const deleteBoard = async (taskId: string) => {
+  const deleteBoard = await prisma.task.delete({
+    where: {
+      id: taskId,
+    },
+  });
+  return deleteBoard;
 }
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
@@ -52,6 +62,9 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       case 'PUT':
         const newTaskEdited = await editTask(req.body);
         return res.json(newTaskEdited);
+      case 'DELETE':
+        const deletedTask = await deleteBoard(req.body.taskId);
+        return res.json(deletedTask);
       default:
         break;
     }
