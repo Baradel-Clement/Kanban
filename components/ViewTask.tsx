@@ -5,7 +5,7 @@ import { useTaskStateContext } from '../context/Task';
 import { IColumn, Task } from '../interfaces';
 
 const ViewTask = () => {
-  const { viewTask, setViewTask, displayViewTaskChangeColumn, setDisplayViewTaskChangeColumn, displayModalEditDeleteTask, setDisplayModalEditDeleteTask } = useTaskStateContext();
+  const { viewTask, setViewTask, displayViewTaskChangeColumn, setDisplayViewTaskChangeColumn, displayModalEditDeleteTask, setDisplayModalEditDeleteTask, setDisplayEditTask } = useTaskStateContext();
   const { boards, setBoards, boardSelectedId } = useHomeStateContext();
   const { setDisplayDeleteModal } = useBoardStateContext();
   let completeBoardSelected = boards.find((board) => board.id === boardSelectedId);
@@ -120,10 +120,17 @@ const ViewTask = () => {
           {
             displayModalEditDeleteTask && (
               <div className='w-[192px] h-[94px] flex flex-col justify-between bg-lightBg dark:bg-darkBg p-4 rounded-lg absolute z-30 top-[60px] -right-[96px] closeModalEditDeleteTaskOff'>
-                <p className=' text-bL text-mediumGrey hover:underline cursor-pointer'>Edit Task</p>
+                <p onClick={() => {
+                  if (viewTask.task) {
+                    setDisplayEditTask({ display: true, task: viewTask.task });
+                    setDisplayModalEditDeleteTask(false);
+                    setViewTask({ display: false, task: null });
+                  }
+                }} className=' text-bL text-mediumGrey hover:underline cursor-pointer'>Edit Task</p>
                 <p onClick={() => {
                   if (viewTask.task?.id) {
                     setDisplayDeleteModal({ display: true, mode: 'task', id: viewTask.task.id });
+                    setDisplayModalEditDeleteTask(false);
                     setViewTask({ display: false, task: null });
                   }
                 }} className=' text-bL text-red hover:underline cursor-pointer'>Delete Task</p>

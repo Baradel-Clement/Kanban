@@ -102,6 +102,10 @@ export type TaskContextType = {
   viewTask: { display: boolean, task: Task | null }
   displayViewTaskChangeColumn: boolean
   displayModalEditDeleteTask: boolean
+  displayEditTask: { display: boolean, task: Task | null }
+  displayEditTaskSelectColumn: boolean;
+  editTaskInputs: { title: string, description: string, subtasks: { id: string, title: string, isCompleted: boolean }[] | [], status: { value: string, columnId: string } };
+  editTaskErrors: { title: boolean, description: boolean, subtasks: string[] }
   setDisplayAddTask: React.Dispatch<React.SetStateAction<boolean>>
   setDisplayAddTaskSelectColumn: React.Dispatch<React.SetStateAction<boolean>>
   setAddTaskInputs: React.Dispatch<React.SetStateAction<{
@@ -120,6 +124,27 @@ export type TaskContextType = {
   }>>
   setDisplayViewTaskChangeColumn: React.Dispatch<React.SetStateAction<boolean>>
   setDisplayModalEditDeleteTask: React.Dispatch<React.SetStateAction<boolean>>
+  setDisplayEditTask: React.Dispatch<React.SetStateAction<{
+    display: boolean;
+    task: Task | null;
+  }>>
+  setDisplayEditTaskSelectColumn: React.Dispatch<React.SetStateAction<boolean>>
+  setEditTaskInputs: React.Dispatch<React.SetStateAction<{
+    title: string;
+    description: string;
+    subtasks: {
+      id: string;
+      title: string;
+      isCompleted: boolean;
+    }[] | [];
+    status: {
+      value: string;
+      columnId: string;
+    };
+  }>>
+  setEditTaskErrors: React.Dispatch<React.SetStateAction<{ title: boolean, description: boolean, subtasks: string[] }>>
   onChangeAddTaskInputs: (inputName: string, mode: string, subtaskId: string, inputValue: string) => void
+  onChangeEditTaskInputs: (inputName: string, mode: string, subtaskId: string, inputValue: string) => void
   checkAddTaskFormErrors: () => boolean
+  checkEditTaskFormErrors: () => boolean
 };

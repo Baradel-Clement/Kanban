@@ -10,6 +10,7 @@ import { Toaster } from 'react-hot-toast';
 import { useTaskStateContext } from '../context/Task';
 import AddTask from './AddTask';
 import ViewTask from './ViewTask';
+import EditTask from './EditTask';
 
 type Props = {
   children?: ReactNode
@@ -19,7 +20,7 @@ type Props = {
 const Layout = ({ children, title = 'Kanban' }: Props) => {
   const { updateBoardModal, setUpdateBoardModal, darkMode, setDarkMode } = useHomeStateContext();
   const { displayAddEditBoard, displayDeleteModal } = useBoardStateContext();
-  const { displayAddTask, displayAddTaskSelectColumn, setDisplayAddTaskSelectColumn, viewTask, displayViewTaskChangeColumn, setDisplayViewTaskChangeColumn, displayModalEditDeleteTask, setDisplayModalEditDeleteTask } = useTaskStateContext();
+  const { displayAddTask, displayAddTaskSelectColumn, setDisplayAddTaskSelectColumn, viewTask, displayViewTaskChangeColumn, setDisplayViewTaskChangeColumn, displayModalEditDeleteTask, setDisplayModalEditDeleteTask, displayEditTask, displayEditTaskSelectColumn, setDisplayEditTaskSelectColumn } = useTaskStateContext();
 
   useEffect(() => {
     let darkModePreference = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -48,6 +49,11 @@ const Layout = ({ children, title = 'Kanban' }: Props) => {
           setDisplayModalEditDeleteTask(false)
         }
       }
+      if (displayEditTaskSelectColumn) {
+        if (closeModalUpdateBoard('closeModalSelectColumnOff', e)) {
+          setDisplayEditTaskSelectColumn(false)
+        }
+      }
     }}>
       <Head>
         <title>{title}</title>
@@ -67,6 +73,9 @@ const Layout = ({ children, title = 'Kanban' }: Props) => {
       }
       {
         viewTask.display && (<ViewTask />)
+      }
+      {
+        displayEditTask.display && (<EditTask />)
       }
       {children}
     </div>
