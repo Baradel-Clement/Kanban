@@ -23,7 +23,7 @@ const Login: NextPage<LoginProps> = ({ providers }) => {
       <div className='flex flex-row w-screen h-screen'>
         <div className='w-2/4 bg-purple h-full flex justify-center items-center text-center'>
           <div className='p-2 w-[320px] border-y-2 border-white'>
-            <h1 className='text-white text-hXL font-bold'>Welcome to your favorite Kanban !</h1>
+            <h1 className='text-white text-hXL font-bold'>Welcome to your favorite Kanban Board !</h1>
           </div>
         </div>
         <div className='w-2/4 bg-black h-full flex justify-center items-center'>
