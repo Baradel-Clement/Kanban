@@ -1,9 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./app/**/*.{js,ts,jsx,tsx}", // Note the addition of the `app` directory.
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
+    "./ap/**/*.{js,ts,jsx,tsx}", // Note the addition of the `app` directory.
+    "./paes/**/*.{js,ts,jsx,tsx}",
+    "./comonents/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     colors: {
